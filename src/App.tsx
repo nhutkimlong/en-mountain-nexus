@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -10,6 +9,10 @@ import Dashboard from "./pages/Dashboard";
 import Plans from "./pages/Plans";
 import Layout from "./components/Layout";
 import NotFound from "./pages/NotFound";
+import Heritage from "./pages/Heritage";
+import Events from "./pages/Events";
+import Promotion from "./pages/Promotion";
+import Statistics from "./pages/Statistics";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,10 +34,10 @@ const App: React.FC = () => (
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="plans" element={<Plans />} />
-            <Route path="heritage" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold text-slate-800">Module Giám sát Di tích</h2><p className="text-slate-600 mt-2">Tính năng đang được phát triển</p></div>} />
-            <Route path="events" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold text-slate-800">Module Sự kiện Du lịch</h2><p className="text-slate-600 mt-2">Tính năng đang được phát triển</p></div>} />
-            <Route path="promotion" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold text-slate-800">Module Xúc tiến Du lịch</h2><p className="text-slate-600 mt-2">Tính năng đang được phát triển</p></div>} />
-            <Route path="statistics" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold text-slate-800">Module Thống kê Du khách</h2><p className="text-slate-600 mt-2">Tính năng đang được phát triển</p></div>} />
+            <Route path="heritage" element={<Heritage />} />
+            <Route path="events" element={<Events />} />
+            <Route path="promotion" element={<Promotion />} />
+            <Route path="statistics" element={<Statistics />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
