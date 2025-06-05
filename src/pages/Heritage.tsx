@@ -1,12 +1,12 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Search, Plus, Eye, Edit, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MapPin, Search, Eye, Edit, AlertTriangle } from "lucide-react";
+import AddHeritageDialog from "@/components/AddHeritageDialog";
 
 const Heritage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,10 +67,7 @@ const Heritage = () => {
           <h1 className="text-3xl font-bold text-slate-800">Giám sát Di tích</h1>
           <p className="text-slate-600 mt-1">Quản lý và theo dõi tình trạng các di tích lịch sử</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Thêm Di tích mới
-        </Button>
+        <AddHeritageDialog />
       </div>
 
       {/* Stats Cards */}

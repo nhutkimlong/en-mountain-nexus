@@ -1,12 +1,12 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Search, Plus, Eye, Edit, Users, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar, Search, Eye, Edit, Users, MapPin } from "lucide-react";
+import AddEventDialog from "@/components/AddEventDialog";
 
 const Events = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,10 +74,7 @@ const Events = () => {
           <h1 className="text-3xl font-bold text-slate-800">Sự kiện Du lịch</h1>
           <p className="text-slate-600 mt-1">Quản lý và theo dõi các sự kiện du lịch tại khu vực</p>
         </div>
-        <Button className="bg-orange-600 hover:bg-orange-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Tạo Sự kiện mới
-        </Button>
+        <AddEventDialog />
       </div>
 
       {/* Stats Cards */}

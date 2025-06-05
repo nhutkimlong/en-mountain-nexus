@@ -1,72 +1,70 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Megaphone, Search, Plus, Eye, Edit, TrendingUp, Globe, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TrendingUp, Search, Eye, Edit, Target, Calendar } from "lucide-react";
+import AddPromotionDialog from "@/components/AddPromotionDialog";
 
 const Promotion = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [typeFilter, setTypeFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
-  // Mock data for promotion campaigns
-  const campaigns = [
+  // Mock data for promotion activities
+  const promotionActivities = [
     {
       id: 1,
-      name: "Quảng bá Núi Bà Đen trên Social Media",
-      type: "Digital Marketing",
-      platform: "Facebook, Instagram",
-      startDate: "2024-01-01",
-      endDate: "2024-03-31",
+      title: "Quảng cáo Facebook Lễ hội Núi Bà Đen",
+      type: "Quảng cáo trực tuyến",
+      period: "15/03 - 17/03/2024",
       status: "Đang chạy",
-      budget: "50,000,000",
-      reach: "125,000",
-      engagement: "8,500"
+      budget: 15000000,
+      reach: 250000,
+      engagement: 12500,
+      conversion: 3.2
     },
     {
       id: 2,
-      name: "Hợp tác với Travel Blogger",
-      type: "Influencer Marketing",
-      platform: "YouTube, Blog",
-      startDate: "2024-02-15",
-      endDate: "2024-04-15",
-      status: "Đang chạy",
-      budget: "30,000,000",
-      reach: "75,000",
-      engagement: "12,300"
+      title: "Roadshow Hội chợ Du lịch TP.HCM",
+      type: "Hội chợ du lịch",
+      period: "20/04 - 22/04/2024",
+      status: "Sắp triển khai",
+      budget: 50000000,
+      reach: 0,
+      engagement: 0,
+      conversion: 0
     },
     {
       id: 3,
-      name: "Quảng cáo trên Google Ads",
-      type: "Search Marketing",
-      platform: "Google Ads",
-      startDate: "2024-01-15",
-      endDate: "2024-12-31",
-      status: "Đang chạy",
-      budget: "100,000,000",
-      reach: "250,000",
-      engagement: "15,600"
+      title: "Hợp tác KOL review điểm đến",
+      type: "Hợp tác KOL",
+      period: "01/02 - 28/02/2024",
+      status: "Hoàn thành",
+      budget: 25000000,
+      reach: 180000,
+      engagement: 18000,
+      conversion: 5.8
     }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Đang chạy": return "bg-green-100 text-green-800";
-      case "Đã hoàn thành": return "bg-blue-100 text-blue-800";
+      case "Sắp triển khai": return "bg-blue-100 text-blue-800";
+      case "Hoàn thành": return "bg-gray-100 text-gray-800";
       case "Tạm dừng": return "bg-yellow-100 text-yellow-800";
-      case "Đã hủy": return "bg-red-100 text-red-800";
+      case "Hủy": return "bg-red-100 text-red-800";
       default: return "bg-gray-100 text-gray-800";
     }
   };
 
-  const filteredCampaigns = campaigns.filter(campaign => {
-    const matchesSearch = campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         campaign.platform.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = typeFilter === "all" || campaign.type === typeFilter;
-    return matchesSearch && matchesType;
+  const filteredActivities = promotionActivities.filter(activity => {
+    const matchesSearch = activity.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         activity.type.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "all" || activity.status === statusFilter;
+    return matchesSearch && matchesStatus;
   });
 
   return (
@@ -75,19 +73,16 @@ const Promotion = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-slate-800">Xúc tiến Du lịch</h1>
-          <p className="text-slate-600 mt-1">Quản lý các chiến dịch quảng bá và xúc tiến du lịch</p>
+          <p className="text-slate-600 mt-1">Quản lý các hoạt động marketing và xúc tiến du lịch</p>
         </div>
-        <Button className="bg-purple-600 hover:bg-purple-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Tạo Chiến dịch mới
-        </Button>
+        <AddPromotionDialog />
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Chiến dịch đang chạy</CardTitle>
+            <CardTitle className="text-sm font-medium text-slate-600">Hoạt động tháng này</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-slate-800">12</div>
@@ -96,29 +91,29 @@ const Promotion = () => {
         </Card>
         <Card>
           <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-slate-600">Tổng ngân sách</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-purple-600">2.8 tỷ</div>
+            <p className="text-xs text-slate-500 mt-1">VNĐ cho quý này</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-slate-600">Tổng tiếp cận</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">450K</div>
-            <p className="text-xs text-slate-500 mt-1">Người được tiếp cận</p>
+            <div className="text-2xl font-bold text-blue-600">1.2M</div>
+            <p className="text-xs text-slate-500 mt-1">Lượt tiếp cận tháng này</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Tương tác</CardTitle>
+            <CardTitle className="text-sm font-medium text-slate-600">Tỷ lệ chuyển đổi</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">36.4K</div>
-            <p className="text-xs text-slate-500 mt-1">Lượt tương tác</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Ngân sách sử dụng</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-purple-600">180M</div>
-            <p className="text-xs text-slate-500 mt-1">VNĐ trong tháng</p>
+            <div className="text-2xl font-bold text-green-600">4.2%</div>
+            <p className="text-xs text-slate-500 mt-1">Trung bình các hoạt động</p>
           </CardContent>
         </Card>
       </div>
@@ -128,65 +123,32 @@ const Promotion = () => {
         <CardHeader>
           <CardTitle className="text-lg flex items-center">
             <TrendingUp className="h-5 w-5 mr-2" />
-            Hiệu quả Chiến dịch
+            Hiệu quả Hoạt động
           </CardTitle>
-          <CardDescription>Thống kê tiếp cận và tương tác theo tháng</CardDescription>
+          <CardDescription>Tổng quan hiệu quả các hoạt động xúc tiến</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-64 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg flex items-center justify-center">
-            <div className="text-center">
-              <TrendingUp className="h-12 w-12 text-purple-400 mx-auto mb-4" />
-              <p className="text-slate-600">Biểu đồ hiệu quả chiến dịch</p>
-              <p className="text-sm text-slate-500">Sẽ hiển thị dữ liệu thực tế khi tích hợp</p>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center p-4 border rounded-lg">
+              <div className="text-2xl font-bold text-blue-600">650K</div>
+              <p className="text-sm text-slate-600">Tổng Reach</p>
+            </div>
+            <div className="text-center p-4 border rounded-lg">
+              <div className="text-2xl font-bold text-green-600">32.5K</div>
+              <p className="text-sm text-slate-600">Tổng Engagement</p>
+            </div>
+            <div className="text-center p-4 border rounded-lg">
+              <div className="text-2xl font-bold text-purple-600">90M</div>
+              <p className="text-sm text-slate-600">Tổng chi phí (VNĐ)</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Campaign Channels */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600 flex items-center">
-              <Globe className="h-4 w-4 mr-2" />
-              Digital Marketing
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-lg font-bold text-blue-600">8 chiến dịch</div>
-            <p className="text-xs text-slate-500 mt-1">Facebook, Google, Instagram</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600 flex items-center">
-              <Users className="h-4 w-4 mr-2" />
-              Influencer Marketing
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-lg font-bold text-green-600">3 chiến dịch</div>
-            <p className="text-xs text-slate-500 mt-1">YouTuber, Blogger</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600 flex items-center">
-              <Megaphone className="h-4 w-4 mr-2" />
-              Traditional Media
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-lg font-bold text-purple-600">1 chiến dịch</div>
-            <p className="text-xs text-slate-500 mt-1">TV, Radio, Báo chí</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Campaigns List */}
+      {/* Activities List */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Danh sách Chiến dịch</CardTitle>
+          <CardTitle className="text-lg">Danh sách Hoạt động</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-4 mb-4">
@@ -194,22 +156,22 @@ const Promotion = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                 <Input
-                  placeholder="Tìm kiếm chiến dịch..."
+                  placeholder="Tìm kiếm hoạt động..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
                 />
               </div>
             </div>
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-48">
-                <SelectValue placeholder="Lọc theo loại" />
+                <SelectValue placeholder="Lọc theo trạng thái" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả loại</SelectItem>
-                <SelectItem value="Digital Marketing">Digital Marketing</SelectItem>
-                <SelectItem value="Influencer Marketing">Influencer Marketing</SelectItem>
-                <SelectItem value="Search Marketing">Search Marketing</SelectItem>
+                <SelectItem value="all">Tất cả trạng thái</SelectItem>
+                <SelectItem value="Đang chạy">Đang chạy</SelectItem>
+                <SelectItem value="Sắp triển khai">Sắp triển khai</SelectItem>
+                <SelectItem value="Hoàn thành">Hoàn thành</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -217,35 +179,44 @@ const Promotion = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Tên chiến dịch</TableHead>
-                <TableHead>Loại</TableHead>
-                <TableHead>Nền tảng</TableHead>
+                <TableHead>Tiêu đề hoạt động</TableHead>
+                <TableHead>Loại hình</TableHead>
                 <TableHead>Thời gian</TableHead>
                 <TableHead>Trạng thái</TableHead>
                 <TableHead>Ngân sách</TableHead>
-                <TableHead>Tiếp cận</TableHead>
+                <TableHead>Reach/Engagement</TableHead>
+                <TableHead>Conversion</TableHead>
                 <TableHead>Thao tác</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCampaigns.map((campaign) => (
-                <TableRow key={campaign.id}>
-                  <TableCell className="font-medium">{campaign.name}</TableCell>
-                  <TableCell className="text-slate-600">{campaign.type}</TableCell>
-                  <TableCell className="text-slate-600">{campaign.platform}</TableCell>
+              {filteredActivities.map((activity) => (
+                <TableRow key={activity.id}>
+                  <TableCell className="font-medium">{activity.title}</TableCell>
+                  <TableCell className="text-slate-600">{activity.type}</TableCell>
                   <TableCell className="text-slate-600">
-                    {campaign.startDate} - {campaign.endDate}
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-1" />
+                      {activity.period}
+                    </div>
                   </TableCell>
                   <TableCell>
-                    <Badge className={getStatusColor(campaign.status)}>
-                      {campaign.status}
+                    <Badge className={getStatusColor(activity.status)}>
+                      {activity.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-slate-600">
-                    {parseInt(campaign.budget).toLocaleString()} VNĐ
+                    {(activity.budget / 1000000).toFixed(1)}M VNĐ
                   </TableCell>
                   <TableCell className="text-slate-600">
-                    {parseInt(campaign.reach).toLocaleString()}
+                    <div className="flex items-center">
+                      <Target className="h-4 w-4 mr-1" />
+                      {activity.reach > 0 ? `${(activity.reach / 1000).toFixed(0)}K` : "-"} / 
+                      {activity.engagement > 0 ? ` ${(activity.engagement / 1000).toFixed(1)}K` : " -"}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-slate-600">
+                    {activity.conversion > 0 ? `${activity.conversion}%` : "-"}
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
