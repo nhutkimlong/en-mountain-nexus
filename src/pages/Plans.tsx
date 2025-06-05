@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Plus, Search, Filter } from "lucide-react";
+import { FileText, Search, Filter } from "lucide-react";
+import AddPlanDialog from "@/components/AddPlanDialog";
 
 const Plans = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,10 +64,7 @@ const Plans = () => {
           <h1 className="text-3xl font-bold text-slate-800">Quản lý Kế hoạch</h1>
           <p className="text-slate-600 mt-1">Theo dõi và quản lý các kế hoạch công việc</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Thêm kế hoạch mới
-        </Button>
+        <AddPlanDialog />
       </div>
 
       {/* Search and Filter */}
@@ -155,10 +152,7 @@ const Plans = () => {
             <p className="text-slate-600 mb-4">
               {searchTerm ? "Thử tìm kiếm với từ khóa khác" : "Chưa có kế hoạch nào được tạo"}
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Plus className="h-4 w-4 mr-2" />
-              Thêm kế hoạch đầu tiên
-            </Button>
+            <AddPlanDialog />
           </CardContent>
         </Card>
       )}
